@@ -16,8 +16,17 @@
 
 | Source path | Documentation files |
 |-------------|---------------------|
+| `pluginator/define.py` | `docs/getting-started.md`, `docs/api-reference.md` |
+| `pluginator/actions.py` | `docs/api-reference.md` |
+| `pluginator/pytest.py` | `docs/api-reference.md`, `docs/configuration.md`, `docs/examples.md` |
+| `pluginator/utils.py` | `docs/api-reference.md` |
+| `pyproject.toml` | `docs/getting-started.md`, `docs/index.md` |
 
 ### Conventions
+
+- API Reference starts with a Quick Reference summary table, followed by detailed sections per module
+- Examples are separated by `---` horizontal rules
+- Configuration presents the option resolution priority chain as a table
 
 ## Lessons
 
