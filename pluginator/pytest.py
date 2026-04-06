@@ -1,25 +1,23 @@
 import os
 import typing as t
 from copy import deepcopy
-from functools import cached_property
 from dataclasses import dataclass, field
+from functools import cached_property
 
 import yaml
-
-from _pytest.main import Session
 from _pytest.config import Config
-from _pytest.config.argparsing import Parser, OptionGroup
-
+from _pytest.config.argparsing import OptionGroup, Parser
+from _pytest.main import Session
 from qools.funcutils import called_once
 
 from .actions import (
     Action,
-    ActionManager,
     ActionContext,
+    ActionManager,
 )
 from .utils import call_context
 
-PLUGINATOR_OPTIONS_ATTRIBUTE = '__pluginator_options__'
+PLUGINATOR_OPTIONS_ATTRIBUTE = "__pluginator_options__"
 EXCLUDED_TYPES = (list, tuple, set, frozenset)
 
 
@@ -34,10 +32,7 @@ class CommandLine:
         self.args = args
         self.kwargs = kwargs
 
-    def register_once(self,
-                      opt_type: type,
-                      parser: Parser, *,
-                      group: t.Optional[OptionGroup] = None):
+    def register_once(self, opt_type: type, parser: Parser, *, group: OptionGroup | None = None):
         """
         Register the option once in pytest option parser.
 
@@ -49,12 +44,15 @@ class CommandLine:
         pluginator_options = getattr(parser, PLUGINATOR_OPTIONS_ATTRIBUTE, [])
 
         if self.opt not in pluginator_options:
-            if 'group' in self.kwargs:
-                group = parser.getgroup(self.kwargs.pop('group'))
+            if "group" in self.kwargs:
+                group = parser.getgroup(self.kwargs.pop("group"))
 
-            if 'type' not in self.kwargs and self.kwargs.get('action') not in ('store_true', 'store_false'):
-                if opt_type not in EXCLUDED_TYPES:
-                    self.kwargs['type'] = opt_type
+            if (
+                "type" not in self.kwargs
+                and self.kwargs.get("action") not in ("store_true", "store_false")
+                and opt_type not in EXCLUDED_TYPES
+            ):
+                self.kwargs["type"] = opt_type
 
             (group or parser).addoption(self.opt, *self.args, **self.kwargs)
             pluginator_options.append(self.opt)
@@ -68,15 +66,20 @@ class PluginOption:
     """
 
     # pylint: disable=used-before-assignment
-    def __init__(self, opt_type: type, /, *,
-                 nullable: bool = False,
-                 required: bool = False,
-                 env_var: t.Optional[str] = None,
-                 default_from: t.Optional[str] = None,
-                 plugin_config_key: t.Optional[str] = None,
-                 command_line: t.Optional[CommandLine] = None,
-                 hook: t.Optional[t.Callable[[t.Any], t.Any]] = None,
-                 strict: bool = True):
+    def __init__(
+        self,
+        opt_type: type,
+        /,
+        *,
+        nullable: bool = False,
+        required: bool = False,
+        env_var: str | None = None,
+        default_from: str | None = None,
+        plugin_config_key: str | None = None,
+        command_line: CommandLine | None = None,
+        hook: t.Callable[[t.Any], t.Any] | None = None,
+        strict: bool = True,
+    ):
         self._type = opt_type
 
         self._env_var = env_var
@@ -88,7 +91,7 @@ class PluginOption:
         self._plugin_config_key = plugin_config_key
         self._strict = strict
 
-        self._name: t.Optional[str] = None
+        self._name: str | None = None
 
     @property
     def type(self):
@@ -106,14 +109,14 @@ class PluginOption:
             return self._type(self._hook(value)) if self._strict else self._hook(value)
         return self._type(value) if self._strict else value
 
-    def __get__(self, instance: 'BasePlugin', _):
+    def __get__(self, instance: "BasePlugin", _):
         if instance is None:
             return self
 
         if self._plugin_config_key is not None:
             plugin_config_value = instance.plugin_config.get(self._plugin_config_key, object)
 
-            if plugin_config_value != object:
+            if plugin_config_value is not object:
                 return self._prepare_value(plugin_config_value)
 
         if self._env_var is not None:
@@ -139,9 +142,7 @@ class PluginOption:
 
         return None if self._nullable else self._type()
 
-    def init_command_line(self,
-                          parser: Parser, *,
-                          group: t.Optional[OptionGroup] = None):
+    def init_command_line(self, parser: Parser, *, group: OptionGroup | None = None):
         """
         Init command line settings for the option.
 
@@ -158,18 +159,19 @@ class PluginMeta:
     """
     Plugin meta information.
     """
+
     name: str
     actions: list[Action] = field(kw_only=True, default=None)
-    config_file: t.Optional[str] = field(kw_only=True, default=None)
-    default_config: t.Optional[dict] = field(kw_only=True, default=None)
-    dependencies: t.Optional[t.Iterable[str]] = field(kw_only=True, default=None)
+    config_file: str | None = field(kw_only=True, default=None)
+    default_config: dict | None = field(kw_only=True, default=None)
+    dependencies: t.Iterable[str] | None = field(kw_only=True, default=None)
 
 
 class BasePluginMeta(type):
     def __new__(mcs, name, bases, attrs):
         cls = type.__new__(mcs, name, bases, attrs)
 
-        if hasattr(cls, 'pytest_addoption'):
+        if hasattr(cls, "pytest_addoption"):
             cls.pytest_addoption = called_once(cls.pytest_addoption)
 
         return cls
@@ -179,12 +181,13 @@ class BasePlugin(metaclass=BasePluginMeta):
     """
     Base plugin class.
     """
+
     __meta__: PluginMeta
 
     def __init__(self):
-        assert hasattr(self, '__meta__'), f'meta object does not defined for "{self.__class__.__name__}"'
+        assert hasattr(self, "__meta__"), f'meta object does not defined for "{self.__class__.__name__}"'
 
-        self.__pytest_config: t.Optional[Config] = None
+        self.__pytest_config: Config | None = None
         self._actions: ActionManager = ActionManager()
 
         if self.__meta__.actions is not None:
@@ -192,10 +195,11 @@ class BasePlugin(metaclass=BasePluginMeta):
                 self._actions.add_action(action, self.plugin_config)
 
     def __repr__(self):
-        return f'<{self.__class__.__name__}: {self.meta.name}>'
+        return f"<{self.__class__.__name__}: {self.meta.name}>"
 
     def action(self, name: str, context: ActionContext, *, lazy: bool = False):
         if lazy:
+
             def wrapper(**kwargs):
                 ctx = deepcopy(context)
                 ctx.update(**kwargs)
@@ -226,7 +230,7 @@ class BasePlugin(metaclass=BasePluginMeta):
         if not os.path.exists(self.meta.config_file):
             return default_config
 
-        with open(self.meta.config_file, 'r', encoding='utf-8') as f:
+        with open(self.meta.config_file, encoding="utf-8") as f:
             config_data = yaml.full_load(f)
 
             if isinstance(config_data, dict):
@@ -262,9 +266,11 @@ class BasePlugin(metaclass=BasePluginMeta):
         self.__pytest_config.add_cleanup(lambda: self.__pytest_config.pluginmanager.unregister(name=name))
 
 
-def install_pytest_plugins(*plugins,
-                           check_deps: bool = True,  # TODO: remove flag for new minor version
-                           context: t.Optional[dict[str, t.Any]] = None) -> None:
+def install_pytest_plugins(
+    *plugins,
+    check_deps: bool = True,  # TODO: remove flag for new minor version
+    context: dict[str, t.Any] | None = None,
+) -> None:
     """
     Install pytest plugins in context.
 
@@ -275,9 +281,9 @@ def install_pytest_plugins(*plugins,
     """
     context = call_context() if context is None else context
 
-    ctx_pytest_addoption = context.get('pytest_addoption', lambda parser: None)
-    ctx_pytest_configure = context.get('pytest_configure', lambda config: None)
-    ctx_pytest_collection_finish = context.get('pytest_collection_finish', lambda session: None)
+    ctx_pytest_addoption = context.get("pytest_addoption", lambda parser: None)
+    ctx_pytest_configure = context.get("pytest_configure", lambda config: None)
+    ctx_pytest_collection_finish = context.get("pytest_collection_finish", lambda session: None)
 
     failed_deps = []
     plugin_name_to_failed_deps = {}
@@ -295,7 +301,7 @@ def install_pytest_plugins(*plugins,
             plugin.init_pytest_config(config)
             plugin.install()
 
-            configure_callback = getattr(plugin, 'configure', None)
+            configure_callback = getattr(plugin, "configure", None)
 
             if configure_callback is not None:
                 configure_callback()
@@ -316,18 +322,18 @@ def install_pytest_plugins(*plugins,
                 fails = plugin_name_to_failed_deps.items()
                 message = 'Plugin "{}" needs "{}" dependencies, but does not installed'
 
-                raise AssertionError(*map(lambda i: message.format(i[0], ', '.join(i[1])), fails))
+                raise AssertionError(*map(lambda i: message.format(i[0], ", ".join(i[1])), fails))
 
-    context['pytest_addoption'] = pytest_addoption
-    context['pytest_configure'] = pytest_configure
-    context['pytest_collection_finish'] = pytest_collection_finish
+    context["pytest_addoption"] = pytest_addoption
+    context["pytest_configure"] = pytest_configure
+    context["pytest_collection_finish"] = pytest_collection_finish
 
 
 __all__ = [
-    'BasePlugin',
-    'PluginMeta',
-    'CommandLine',
-    'PluginOption',
-    'BasePluginMeta',
-    'install_pytest_plugins',
+    "BasePlugin",
+    "PluginMeta",
+    "CommandLine",
+    "PluginOption",
+    "BasePluginMeta",
+    "install_pytest_plugins",
 ]

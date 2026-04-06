@@ -1,5 +1,5 @@
-import typing as t
 import importlib
+import typing as t
 
 
 class ActionContext:
@@ -16,11 +16,7 @@ class ActionContext:
 
 
 class Action:
-    def __init__(self,
-                 name: str,
-                 module: str, *,
-                 enable: bool = True,
-                 default_config: t.Optional[dict] = None):
+    def __init__(self, name: str, module: str, *, enable: bool = True, default_config: dict | None = None):
         self._name = name
         self._module = module
         self._enable = enable
@@ -43,31 +39,28 @@ class Action:
         return self._enable
 
     @property
-    def setup(self) -> t.Optional[t.Callable]:
+    def setup(self) -> t.Callable | None:
         return self._setup
 
     @property
-    def config(self) -> t.Optional[dict]:
+    def config(self) -> dict | None:
         return self._config
 
     def configure(self, action_config: dict):
         if self._func:
-            raise RuntimeError('Action already initialized')
+            raise RuntimeError("Action already initialized")
 
-        self._enable = action_config.get('enable', self._enable)
-        module = action_config.get('module', self._module)
+        self._enable = action_config.get("enable", self._enable)
+        module = action_config.get("module", self._module)
 
-        self._config = {
-            k: action_config.get('config', {}).get(k, v)
-            for k, v in self._config.items()
-        }
+        self._config = {k: action_config.get("config", {}).get(k, v) for k, v in self._config.items()}
 
         try:
             self._module = importlib.import_module(module)
         except ImportError as e:
             raise ImportError(f'Failed to import module "{module}": {e}') from e
 
-        func = getattr(self._module, 'main', None)
+        func = getattr(self._module, "main", None)
         if func is None:
             raise AttributeError(f'Module "{self._module}" does not define a "main" func attribute')
 
@@ -76,20 +69,18 @@ class Action:
 
         self._func = func
 
-        self._setup = getattr(self._module, 'setup', None)
+        self._setup = getattr(self._module, "setup", None)
 
 
 class ActionManager:
     def __init__(self):
         self._actions: dict[str, Action] = {}
 
-    def add_action(self,
-                   action: Action,
-                   plugin_config: t.Optional[dict] = None) -> None:
+    def add_action(self, action: Action, plugin_config: dict | None = None) -> None:
         if action.name in self._actions:
-            raise RuntimeError('Plugin action already exist')
+            raise RuntimeError("Plugin action already exist")
 
-        action.configure(plugin_config.get('actions', {}).get(action.name, {}))
+        action.configure(plugin_config.get("actions", {}).get(action.name, {}))
         if action.enabled and action.setup:
             action.setup(action.config)
 

@@ -1,20 +1,24 @@
 import typing as t
 
+from .actions import Action
 from .pytest import (
     BasePlugin,
-    PluginMeta,
-    CommandLine,
-    PluginOption,
     BasePluginMeta,
+    CommandLine,
+    PluginMeta,
+    PluginOption,
 )
-from .actions import Action
 
 
-def plugin(name: str, /, *,
-           config: t.Optional[str] = None,
-           default_config: t.Optional[dict] = None,
-           deps: t.Optional[list[str]] = None,
-           actions: t.Optional[list[Action]] = None):
+def plugin(
+    name: str,
+    /,
+    *,
+    config: str | None = None,
+    default_config: dict | None = None,
+    deps: list[str] | None = None,
+    actions: list[Action] | None = None,
+):
     """
     Decorator for creating a plugin class.
 
@@ -28,28 +32,31 @@ def plugin(name: str, /, *,
     Returns:
         Decorator function that returns new plugin class.
     """
+
     def wrapper(cls: type) -> type[BasePlugin]:
-        meta = PluginMeta(name=name,
-                          actions=actions,
-                          config_file=config,
-                          default_config=default_config,
-                          dependencies=deps)
+        meta = PluginMeta(
+            name=name, actions=actions, config_file=config, default_config=default_config, dependencies=deps
+        )
         bases = (cls,) if BasePlugin in cls.__mro__ else (cls, BasePlugin)
 
-        return BasePluginMeta(cls.__name__, bases, {'__meta__': meta})
+        return BasePluginMeta(cls.__name__, bases, {"__meta__": meta})
 
     return wrapper
 
 
-def option(opt_type: type, /, *,
-           strict: bool = True,
-           nullable: bool = False,
-           required: bool = False,
-           env_var: t.Optional[str] = None,
-           default_from: t.Optional[str] = None,
-           plugin_config_key: t.Optional[str] = None,
-           command_line: t.Optional[CommandLine] = None,
-           hook: t.Optional[t.Callable[[t.Any], t.Any]] = None) -> PluginOption:
+def option(
+    opt_type: type,
+    /,
+    *,
+    strict: bool = True,
+    nullable: bool = False,
+    required: bool = False,
+    env_var: str | None = None,
+    default_from: str | None = None,
+    plugin_config_key: str | None = None,
+    command_line: CommandLine | None = None,
+    hook: t.Callable[[t.Any], t.Any] | None = None,
+) -> PluginOption:
     """
     Create a plugin option.
 
@@ -67,12 +74,14 @@ def option(opt_type: type, /, *,
     Returns:
         New plugin option object.
     """
-    return PluginOption(opt_type,
-                        hook=hook,
-                        strict=strict,
-                        env_var=env_var,
-                        nullable=nullable,
-                        required=required,
-                        command_line=command_line,
-                        default_from=default_from,
-                        plugin_config_key=plugin_config_key)
+    return PluginOption(
+        opt_type,
+        hook=hook,
+        strict=strict,
+        env_var=env_var,
+        nullable=nullable,
+        required=required,
+        command_line=command_line,
+        default_from=default_from,
+        plugin_config_key=plugin_config_key,
+    )

@@ -2,11 +2,11 @@
 import hamcrest as h
 import pytest
 
-from pluginator.pytest import PluginMeta, PluginOption
 from pluginator.define import option
+from pluginator.pytest import PluginMeta, PluginOption
 
 
-@pytest.mark.parametrize('expected_name', ('test-plugin', ))
+@pytest.mark.parametrize("expected_name", ("test-plugin",))
 def test_plugin_decorator_with_default_values(default_plugin, expected_name):
     default_plugin = default_plugin()
 
