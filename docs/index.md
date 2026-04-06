@@ -1,0 +1,3 @@
+# pluginator
+
+Plugin management system
