@@ -22,7 +22,7 @@ classifiers = [
 
 dependencies = [
     "pyyaml>=6.0",
-    "qools>=0.0.0"
+    "qools>=1.0.0,<1.1.0"
 ]
 
 [project.optional-dependencies]
