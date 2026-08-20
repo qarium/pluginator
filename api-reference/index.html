@@ -1,0 +1,1543 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Plugin management system">
+      
+      
+      
+        <link rel="canonical" href="https://qarium.github.io/pluginator/api-reference/">
+      
+      
+        <link rel="prev" href="../getting-started/">
+      
+      
+        <link rel="next" href="../configuration/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>API Reference - pluginator</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+  <style>
+    /* Dark navbar — override palette in both themes */
+    [data-md-color-scheme=default][data-md-color-primary=custom],
+    [data-md-color-scheme=slate][data-md-color-primary=custom] {
+      --md-primary-fg-color: #0a0a13;
+      --md-primary-fg-color--light: #0a0a13cc;
+      --md-primary-bg-color: #ffffff;
+    }
+
+    .md-header__button.md-logo img,
+    .md-header__button.md-logo svg {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+
+    /* Search form — visible on dark header */
+    .md-search__overlay {
+      background-color: transparent !important;
+    }
+    [data-md-toggle=search]:checked~.md-header .md-search__overlay {
+      background-color: #0000008a !important;
+    }
+    .md-search__inner {
+      background-color: transparent !important;
+    }
+    .md-search__form {
+      background-color: #3a3a3a !important;
+      border-radius: 0.5rem;
+    }
+    .md-search__form:hover {
+      background-color: #4a4a4a !important;
+    }
+    .md-search__input {
+      color: #e0e0e0 !important;
+    }
+    .md-search__input::placeholder {
+      color: #999999 !important;
+    }
+    .md-search__icon {
+      color: #999999 !important;
+    }
+    .md-search__form:hover .md-search__icon,
+    .md-search__input:focus-visible ~ .md-search__icon {
+      color: #e0e0e0 !important;
+    }
+
+    /* Links in dark theme — readable on dark background */
+    [data-md-color-scheme=slate] .md-nav__link,
+    [data-md-color-scheme=slate] .md-toc__link,
+    [data-md-color-scheme=slate] article a {
+      color: #cbd5e0 !important;
+    }
+    [data-md-color-scheme=slate] .md-nav__link--passed,
+    [data-md-color-scheme=slate] .md-toc__link--passed {
+      color: #718096 !important;
+    }
+    [data-md-color-scheme=slate] .md-nav__link:hover,
+    [data-md-color-scheme=slate] .md-toc__link:hover,
+    [data-md-color-scheme=slate] article a:hover {
+      color: var(--md-accent-fg-color) !important;
+    }
+  </style>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#api-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="pluginator" class="md-header__button md-logo" aria-label="pluginator" data-md-component="logo">
+      
+  <img src="https://avatars.githubusercontent.com/u/262344922?s=200&v=4" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            pluginator
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              API Reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/qarium/pluginator" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../getting-started/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Getting Started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  API Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../configuration/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Configuration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../examples/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Examples
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="pluginator" class="md-nav__button md-logo" aria-label="pluginator" data-md-component="logo">
+      
+  <img src="https://avatars.githubusercontent.com/u/262344922?s=200&v=4" alt="logo">
+
+    </a>
+    pluginator
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/qarium/pluginator" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pluginatordefine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pluginator.define
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="pluginator.define">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pluginname-confignone-default_confignone-depsnone-actionsnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plugin(name, /, *, config=None, default_config=None, deps=None, actions=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optionopt_type-stricttrue-nullablefalse-requiredfalse-env_varnone-default_fromnone-plugin_config_keynone-command_linenone-hooknone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        option(opt_type, /, *, strict=True, nullable=False, required=False, env_var=None, default_from=None, plugin_config_key=None, command_line=None, hook=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pluginatoractions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pluginator.actions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="pluginator.actions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#actionname-module-enabletrue-default_confignone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Action(name, module, *, enable=True, default_config=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actioncontext" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ActionContext
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actionmanager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ActionManager
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pluginatorpytest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pluginator.pytest
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="pluginator.pytest">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#commandlineopt-args-kwargs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CommandLine(opt, /, *args, **kwargs)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pluginoption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PluginOption
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pluginmeta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PluginMeta
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basepluginmeta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BasePluginMeta
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#baseplugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BasePlugin
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install_pytest_pluginsplugins-check_depstrue-contextnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        install_pytest_plugins(*plugins, check_deps=True, context=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pluginatorutils" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pluginator.utils
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="pluginator.utils">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#call_context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        call_context()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pluginatordefine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pluginator.define
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="pluginator.define">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pluginname-confignone-default_confignone-depsnone-actionsnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plugin(name, /, *, config=None, default_config=None, deps=None, actions=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optionopt_type-stricttrue-nullablefalse-requiredfalse-env_varnone-default_fromnone-plugin_config_keynone-command_linenone-hooknone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        option(opt_type, /, *, strict=True, nullable=False, required=False, env_var=None, default_from=None, plugin_config_key=None, command_line=None, hook=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pluginatoractions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pluginator.actions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="pluginator.actions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#actionname-module-enabletrue-default_confignone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Action(name, module, *, enable=True, default_config=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actioncontext" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ActionContext
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actionmanager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ActionManager
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pluginatorpytest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pluginator.pytest
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="pluginator.pytest">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#commandlineopt-args-kwargs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CommandLine(opt, /, *args, **kwargs)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pluginoption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PluginOption
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pluginmeta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PluginMeta
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basepluginmeta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BasePluginMeta
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#baseplugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BasePlugin
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install_pytest_pluginsplugins-check_depstrue-contextnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        install_pytest_plugins(*plugins, check_deps=True, context=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pluginatorutils" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pluginator.utils
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="pluginator.utils">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#call_context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        call_context()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="api-reference">API Reference</h1>
+<h2 id="quick-reference">Quick Reference</h2>
+<table>
+<thead>
+<tr>
+<th>Entity</th>
+<th>Module</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>plugin()</code></td>
+<td><code>pluginator.define</code></td>
+<td>Decorator for creating a plugin class</td>
+</tr>
+<tr>
+<td><code>option()</code></td>
+<td><code>pluginator.define</code></td>
+<td>Create a plugin option descriptor</td>
+</tr>
+<tr>
+<td><code>Action</code></td>
+<td><code>pluginator.actions</code></td>
+<td>Runnable action bound to a module</td>
+</tr>
+<tr>
+<td><code>ActionContext</code></td>
+<td><code>pluginator.actions</code></td>
+<td>Context object passed to actions</td>
+</tr>
+<tr>
+<td><code>ActionManager</code></td>
+<td><code>pluginator.actions</code></td>
+<td>Registry of named actions</td>
+</tr>
+<tr>
+<td><code>CommandLine</code></td>
+<td><code>pluginator.pytest</code></td>
+<td>Define a pytest CLI option</td>
+</tr>
+<tr>
+<td><code>PluginOption</code></td>
+<td><code>pluginator.pytest</code></td>
+<td>Descriptor for plugin option resolution</td>
+</tr>
+<tr>
+<td><code>PluginMeta</code></td>
+<td><code>pluginator.pytest</code></td>
+<td>Plugin metadata dataclass</td>
+</tr>
+<tr>
+<td><code>BasePluginMeta</code></td>
+<td><code>pluginator.pytest</code></td>
+<td>Metaclass of <code>BasePlugin</code></td>
+</tr>
+<tr>
+<td><code>BasePlugin</code></td>
+<td><code>pluginator.pytest</code></td>
+<td>Base class for all plugins</td>
+</tr>
+<tr>
+<td><code>install_pytest_plugins()</code></td>
+<td><code>pluginator.pytest</code></td>
+<td>Install plugins into pytest</td>
+</tr>
+<tr>
+<td><code>call_context()</code></td>
+<td><code>pluginator.utils</code></td>
+<td>Get caller's global context</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="pluginatordefine">pluginator.define</h2>
+<h3 id="pluginname-confignone-default_confignone-depsnone-actionsnone"><code>plugin(name, /, *, config=None, default_config=None, deps=None, actions=None)</code></h3>
+<p>Decorator that creates a plugin class with the given metadata.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td><code>str</code></td>
+<td>required</td>
+<td>Plugin name (used for pytest registration)</td>
+</tr>
+<tr>
+<td><code>config</code></td>
+<td><code>str \| None</code></td>
+<td><code>None</code></td>
+<td>Path to YAML config file</td>
+</tr>
+<tr>
+<td><code>default_config</code></td>
+<td><code>dict \| None</code></td>
+<td><code>None</code></td>
+<td>Default configuration values</td>
+</tr>
+<tr>
+<td><code>deps</code></td>
+<td><code>list[str] \| None</code></td>
+<td><code>None</code></td>
+<td>List of dependency plugin names</td>
+</tr>
+<tr>
+<td><code>actions</code></td>
+<td><code>list[Action] \| None</code></td>
+<td><code>None</code></td>
+<td>List of actions for this plugin</td>
+</tr>
+</tbody>
+</table>
+<p>Returns a decorator that wraps the class, adding <code>__meta__</code> and inheriting from <code>BasePlugin</code> if not already a subclass.</p>
+<h3 id="optionopt_type-stricttrue-nullablefalse-requiredfalse-env_varnone-default_fromnone-plugin_config_keynone-command_linenone-hooknone"><code>option(opt_type, /, *, strict=True, nullable=False, required=False, env_var=None, default_from=None, plugin_config_key=None, command_line=None, hook=None)</code></h3>
+<p>Create a <code>PluginOption</code> descriptor. See <a href="../configuration/">Configuration</a> for detailed option resolution.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>opt_type</code></td>
+<td><code>type</code></td>
+<td>required</td>
+<td>Option type (e.g. <code>str</code>, <code>int</code>, <code>bool</code>)</td>
+</tr>
+<tr>
+<td><code>strict</code></td>
+<td><code>bool</code></td>
+<td><code>True</code></td>
+<td>Cast value to <code>opt_type</code> when <code>True</code></td>
+</tr>
+<tr>
+<td><code>nullable</code></td>
+<td><code>bool</code></td>
+<td><code>False</code></td>
+<td>Allow <code>None</code> as value</td>
+</tr>
+<tr>
+<td><code>required</code></td>
+<td><code>bool</code></td>
+<td><code>False</code></td>
+<td>Raise <code>ValueError</code> if no value found</td>
+</tr>
+<tr>
+<td><code>env_var</code></td>
+<td><code>str \| None</code></td>
+<td><code>None</code></td>
+<td>Environment variable name</td>
+</tr>
+<tr>
+<td><code>default_from</code></td>
+<td><code>str \| None</code></td>
+<td><code>None</code></td>
+<td>Plugin property name for default value</td>
+</tr>
+<tr>
+<td><code>plugin_config_key</code></td>
+<td><code>str \| None</code></td>
+<td><code>None</code></td>
+<td>Key in YAML config file</td>
+</tr>
+<tr>
+<td><code>command_line</code></td>
+<td><code>CommandLine \| None</code></td>
+<td><code>None</code></td>
+<td>CLI option definition</td>
+</tr>
+<tr>
+<td><code>hook</code></td>
+<td><code>Callable \| None</code></td>
+<td><code>None</code></td>
+<td>Transform function applied to value</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="pluginatoractions">pluginator.actions</h2>
+<h3 id="actionname-module-enabletrue-default_confignone"><code>Action(name, module, *, enable=True, default_config=None)</code></h3>
+<p>Represents a runnable action bound to a Python module.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td><code>str</code></td>
+<td>required</td>
+<td>Action name (unique within plugin)</td>
+</tr>
+<tr>
+<td><code>module</code></td>
+<td><code>str</code></td>
+<td>required</td>
+<td>Dotted module path (must define <code>main()</code>)</td>
+</tr>
+<tr>
+<td><code>enable</code></td>
+<td><code>bool</code></td>
+<td><code>True</code></td>
+<td>Whether the action is active</td>
+</tr>
+<tr>
+<td><code>default_config</code></td>
+<td><code>dict \| None</code></td>
+<td><code>None</code></td>
+<td>Default config passed to <code>main()</code></td>
+</tr>
+</tbody>
+</table>
+<p>The target module must define a <code>main(config, context)</code> function. Optionally, it can define a <code>setup(config)</code> function called during initialization.</p>
+<p><strong>Properties:</strong> <code>name</code>, <code>enabled</code>, <code>setup</code>, <code>config</code></p>
+<p><strong>Methods:</strong> <code>configure(action_config)</code> — resolve the module, <code>enable</code> flag, and config from the plugin's YAML <code>actions</code> section (see <a href="../configuration/">Configuration</a>)</p>
+<h3 id="actioncontext"><code>ActionContext</code></h3>
+<p>Base context class passed to actions. Provides:</p>
+<ul>
+<li><code>update(**kwargs)</code> — set attributes; raises <code>AttributeError</code> if attribute does not exist</li>
+<li><code>validate()</code> — override for custom validation (no-op by default)</li>
+</ul>
+<p>Subclass it to hold action data — <code>update()</code> only accepts predefined attributes.</p>
+<h3 id="actionmanager"><code>ActionManager</code></h3>
+<p>Registry of named actions. Used internally by <code>BasePlugin</code>.</p>
+<p>Methods:</p>
+<ul>
+<li><code>add_action(action, plugin_config)</code> — register and configure an action; runs its <code>setup</code> if enabled</li>
+<li><code>__call__(name, context)</code> — execute an action by name; raises <code>RuntimeError</code> if not found</li>
+</ul>
+<hr />
+<h2 id="pluginatorpytest">pluginator.pytest</h2>
+<h3 id="commandlineopt-args-kwargs"><code>CommandLine(opt, /, *args, **kwargs)</code></h3>
+<p>Define a pytest command-line option. Arguments are forwarded to <code>parser.addoption()</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>opt</code></td>
+<td><code>str</code></td>
+<td>Option name (e.g. <code>"--my-flag"</code>)</td>
+</tr>
+<tr>
+<td><code>*args</code></td>
+<td>—</td>
+<td>Positional args for <code>addoption</code></td>
+</tr>
+<tr>
+<td><code>**kwargs</code></td>
+<td>—</td>
+<td>Keyword args for <code>addoption</code> (e.g. <code>default</code>, <code>help</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>Methods:</p>
+<ul>
+<li><code>register_once(opt_type, parser, *, group=None)</code> — register option with deduplication</li>
+</ul>
+<h3 id="pluginoption"><code>PluginOption</code></h3>
+<p>Descriptor that resolves a value from multiple sources. See <a href="../configuration/">Configuration</a> for the resolution chain.</p>
+<p><strong>Properties:</strong> <code>type</code>, <code>command_line</code></p>
+<p>Methods:</p>
+<ul>
+<li><code>init_command_line(parser, *, group=None)</code> — register CLI option in pytest parser</li>
+</ul>
+<h3 id="pluginmeta"><code>PluginMeta</code></h3>
+<p>Dataclass holding plugin metadata.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td><code>str</code></td>
+<td>required</td>
+<td>Plugin name</td>
+</tr>
+<tr>
+<td><code>actions</code></td>
+<td><code>list[Action]</code></td>
+<td><code>None</code></td>
+<td>Plugin actions</td>
+</tr>
+<tr>
+<td><code>config_file</code></td>
+<td><code>str \| None</code></td>
+<td><code>None</code></td>
+<td>YAML config file path</td>
+</tr>
+<tr>
+<td><code>default_config</code></td>
+<td><code>dict \| None</code></td>
+<td><code>None</code></td>
+<td>Default configuration</td>
+</tr>
+<tr>
+<td><code>dependencies</code></td>
+<td><code>Iterable[str] \| None</code></td>
+<td><code>None</code></td>
+<td>Required plugin names</td>
+</tr>
+</tbody>
+</table>
+<h3 id="basepluginmeta"><code>BasePluginMeta</code></h3>
+<p>Metaclass of <code>BasePlugin</code>. Wraps <code>pytest_addoption</code> with <code>called_once</code> so repeated installs do not register options twice.</p>
+<h3 id="baseplugin"><code>BasePlugin</code></h3>
+<p>Base class for all plugins. Created automatically by the <code>@plugin()</code> decorator.</p>
+<p><strong>Properties:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>meta</code></td>
+<td><code>PluginMeta</code></td>
+<td>Plugin metadata</td>
+</tr>
+<tr>
+<td><code>pytest_config</code></td>
+<td><code>Config</code></td>
+<td>Pytest config (set during initialization)</td>
+</tr>
+<tr>
+<td><code>plugin_config</code></td>
+<td><code>dict</code></td>
+<td>Merged config from YAML + defaults</td>
+</tr>
+<tr>
+<td><code>plugin_options</code></td>
+<td><code>Iterable[PluginOption]</code></td>
+<td>All option descriptors</td>
+</tr>
+</tbody>
+</table>
+<p>Methods:</p>
+<ul>
+<li><code>action(name, context, *, lazy=False)</code> — execute or get a lazy wrapper for an action</li>
+<li><code>init_plugin_options(parser)</code> — register all options in pytest parser</li>
+<li><code>init_pytest_config(config)</code> — set pytest config</li>
+<li><code>install()</code> — register plugin in pytest</li>
+</ul>
+<h3 id="install_pytest_pluginsplugins-check_depstrue-contextnone"><code>install_pytest_plugins(*plugins, check_deps=True, context=None)</code></h3>
+<p>Install one or more plugins into pytest. Must be called in <code>conftest.py</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>*plugins</code></td>
+<td><code>BasePlugin</code></td>
+<td>required</td>
+<td>Plugin instances to install</td>
+</tr>
+<tr>
+<td><code>check_deps</code></td>
+<td><code>bool</code></td>
+<td><code>True</code></td>
+<td>Validate dependencies at collection time</td>
+</tr>
+<tr>
+<td><code>context</code></td>
+<td><code>dict \| None</code></td>
+<td><code>None</code></td>
+<td>Explicit context (defaults to caller's globals)</td>
+</tr>
+</tbody>
+</table>
+<p>This function injects <code>pytest_addoption</code>, <code>pytest_configure</code>, and <code>pytest_collection_finish</code> hooks into the calling module's context.</p>
+<hr />
+<h2 id="pluginatorutils">pluginator.utils</h2>
+<h3 id="call_context"><code>call_context()</code></h3>
+<p>Returns the global context (<code>f_globals</code>) of the caller's caller. Used internally by <code>install_pytest_plugins</code> to inject pytest hooks into the calling module.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.indexes", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
