@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=75.0", "setuptools-scm>=8.0"]
+requires = ["setuptools>=61.0", "setuptools-scm>=8.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -8,7 +8,7 @@ dynamic = ["version"]
 description = "Plugin management system"
 readme = "README.md"
 requires-python = ">=3.10"
-license = {text = "MIT"}
+license = {text = "BSD-3-Clause"}
 
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -66,6 +66,8 @@ branch = true
 [tool.coverage.report]
 show_missing = true
 skip_empty = true
+
+[tool.setuptools_scm]
 
 [tool.setuptools.packages.find]
 where = ["."]
