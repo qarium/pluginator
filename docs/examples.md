@@ -36,7 +36,15 @@ Define actions that run when called from your plugin or tests.
 
 ```python
 from pluginator.define import plugin, option
-from pluginator import Action
+from pluginator import Action, ActionContext
+
+class ReporterContext(ActionContext):
+    # Attributes must be predefined — update() rejects unknown names
+    def __init__(self, output_dir: str = ""):
+        self.output_dir = output_dir
+
+    def validate(self):
+        assert self.output_dir, "output_dir is required"
 
 @plugin("reporter", actions=[
     Action("generate", "my_plugin.actions.generate", default_config={"format": "text"}),
@@ -59,6 +67,19 @@ def main(config, context):
     format = config.get("format", "text")
     output_dir = context.output_dir
     # Generate report...
+```
+
+**Calling the action**
+
+`validate()` runs before `main()`. With `lazy=True` you get a reusable wrapper whose kwargs override context attributes:
+
+```python
+reporter = ReporterPlugin()
+
+reporter.action("generate", ReporterContext(output_dir=reporter.output_dir))
+
+generate = reporter.action("generate", ReporterContext(), lazy=True)
+generate(output_dir="/tmp/other-reports")
 ```
 
 ---

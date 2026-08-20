@@ -6,6 +6,8 @@
 pip install pluginator
 ```
 
+Requires Python 3.10 or newer.
+
 ## Quick Start
 
 ### 1. Define a plugin
@@ -20,11 +22,19 @@ from pluginator import Action
     Action("greet", "my_plugin.actions.greet"),
 ])
 class MyPlugin:
-    message = option(str, default_from="default_message", env_var="MY_PLUGIN_MESSAGE")
-    count = option(int, default=1)
+    message = option(
+        str,
+        plugin_config_key="message",
+        env_var="MY_PLUGIN_MESSAGE",
+        default_from="default_message",
+    )
+    count = option(int, plugin_config_key="count", default_from="default_count")
 
     def default_message(self):
         return "Hello"
+
+    def default_count(self):
+        return 1
 ```
 
 ### 2. Create an action module
@@ -57,4 +67,4 @@ message: "Hello from config"
 count: 3
 ```
 
-Plugin options are resolved in priority order: **YAML config → environment variable → CLI argument → default property → type default**.
+Plugin options are resolved in priority order: **YAML config key → environment variable → CLI argument → default property → type default**. An option reads the YAML file only when `plugin_config_key` is set — that is why the options above pass `plugin_config_key`.

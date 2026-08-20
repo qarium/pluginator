@@ -8,9 +8,11 @@
 | `option()` | `pluginator.define` | Create a plugin option descriptor |
 | `Action` | `pluginator.actions` | Runnable action bound to a module |
 | `ActionContext` | `pluginator.actions` | Context object passed to actions |
+| `ActionManager` | `pluginator.actions` | Registry of named actions |
 | `CommandLine` | `pluginator.pytest` | Define a pytest CLI option |
 | `PluginOption` | `pluginator.pytest` | Descriptor for plugin option resolution |
 | `PluginMeta` | `pluginator.pytest` | Plugin metadata dataclass |
+| `BasePluginMeta` | `pluginator.pytest` | Metaclass of `BasePlugin` |
 | `BasePlugin` | `pluginator.pytest` | Base class for all plugins |
 | `install_pytest_plugins()` | `pluginator.pytest` | Install plugins into pytest |
 | `call_context()` | `pluginator.utils` | Get caller's global context |
@@ -68,12 +70,25 @@ The target module must define a `main(config, context)` function. Optionally, it
 
 **Properties:** `name`, `enabled`, `setup`, `config`
 
+**Methods:** `configure(action_config)` — resolve the module, `enable` flag, and config from the plugin's YAML `actions` section (see [Configuration](configuration.md))
+
 ### `ActionContext`
 
 Base context class passed to actions. Provides:
 
 - `update(**kwargs)` — set attributes; raises `AttributeError` if attribute does not exist
 - `validate()` — override for custom validation (no-op by default)
+
+Subclass it to hold action data — `update()` only accepts predefined attributes.
+
+### `ActionManager`
+
+Registry of named actions. Used internally by `BasePlugin`.
+
+Methods:
+
+- `add_action(action, plugin_config)` — register and configure an action; runs its `setup` if enabled
+- `__call__(name, context)` — execute an action by name; raises `RuntimeError` if not found
 
 ---
 
@@ -114,6 +129,10 @@ Dataclass holding plugin metadata.
 | `config_file` | `str \| None` | `None` | YAML config file path |
 | `default_config` | `dict \| None` | `None` | Default configuration |
 | `dependencies` | `Iterable[str] \| None` | `None` | Required plugin names |
+
+### `BasePluginMeta`
+
+Metaclass of `BasePlugin`. Wraps `pytest_addoption` with `called_once` so repeated installs do not register options twice.
 
 ### `BasePlugin`
 
